@@ -5,6 +5,8 @@ import Menu from "../Pages/Menu/Menu";
 import Order from "../Pages/Order/Order";
 import Login from "../Authentication/Login";
 import SignUp from "../Authentication/SignUp";
+import DeshBoard from "../DeshBoard/DeshBoard";
+import Cart from "../DeshBoard/Cart";
 
 const Router = createBrowserRouter([
     {
@@ -32,6 +34,17 @@ const Router = createBrowserRouter([
                 element:<SignUp></SignUp>
             },
         ]
+    },
+    {
+        path:'dashboard',
+        element:<DeshBoard></DeshBoard>,
+        children:[
+            {
+                path:'card',
+                element:<Cart></Cart>
+            }
+        ]
     }
+
 ])
 export default Router;

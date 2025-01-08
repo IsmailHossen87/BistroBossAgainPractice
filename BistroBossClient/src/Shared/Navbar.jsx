@@ -3,9 +3,13 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../Providers/Authprobider/AuthProvider";
 import Swal from "sweetalert2";
 import { FaShoppingCart } from "react-icons/fa";
+import useCart from "../Hooks/useCart";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+  // transtact query use kore cart gulo dekhanor jonno
+  const [cart]= useCart()
+  console.log(cart)
   const handleLogOut = () => {
     logOut().then(() => {
       Swal.fire({
@@ -29,10 +33,10 @@ const Navbar = () => {
         <Link to="/order/soup">Order</Link>
       </li>
       <li>
-        <Link to="/">
+        <Link to="/dashboard/card">
           <button className="btn">
             <FaShoppingCart></FaShoppingCart>
-            <div className="badge badge-secondary">+0</div>
+            <div className="badge badge-secondary">+{cart.length}</div>
           </button>
         </Link>
       </li>

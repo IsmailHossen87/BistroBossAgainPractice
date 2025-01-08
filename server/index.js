@@ -2,7 +2,7 @@ const express = require('express')
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
-const { MongoClient, ServerApiVersion } = require('mongodb')
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
 require('dotenv').config()
 const app = express()
 const port = process.env.PORT || 5000
@@ -83,8 +83,17 @@ async function run() {
     })
     // get caart item 
     app.get('/cartitem',async(req,res)=>{
+      const email = req.query.email
       const allCard = req.body 
-      const result = await cartCollection.find(allCard).toArray()
+      const query={email :email}
+      const result = await cartCollection.find(query).toArray()
+      res.send(result)
+    })
+    // delete cart
+    app.delete('/delete/:id',async(req,res)=>{
+      const id= req.params.id 
+      const query = {_id: new ObjectId(id)}
+      const result =await cartCollection.deleteOne(query)
       res.send(result)
     })
 
