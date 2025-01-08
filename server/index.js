@@ -81,6 +81,12 @@ async function run() {
       const result = await cartCollection.insertOne(cartItem)
       res.send(result)
     })
+    // get caart item 
+    app.get('/cartitem',async(req,res)=>{
+      const allCard = req.body 
+      const result = await cartCollection.find(allCard).toArray()
+      res.send(result)
+    })
 
   } finally {
     // Ensures that the client will close when you finish/error

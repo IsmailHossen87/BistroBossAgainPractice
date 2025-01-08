@@ -1,8 +1,49 @@
 import React from 'react';
+import useAuth from '../../Hooks/useAuth';
+import Swal from 'sweetalert2';
+import { useLocation, useNavigate } from 'react-router-dom';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
 
 const FoodCard = ({item}) => {
+    const {user}= useAuth()
+    const navigate = useNavigate()
+    const location = useLocation()
+
     const handleAddtoCard =(item)=>{ 
-        console.log(item)
+        const axiosSecure= useAxiosSecure()
+        if(user && user.email){
+            const cartItem = {menuId:_id,email:user.email,name,image,price }
+            // axiosSecure diye data backend e pathabo
+            axiosSecure.post('/cart',cartItem)
+            .then(res=>{
+                if(res.data.insertedId){
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: `Your work has been saved`,
+                        showConfirmButton: false,
+                        timer: 1500
+                      });
+                }
+            })
+
+        }else
+        // jodi user na thake tahole login korate bbolbe
+        {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Please login add to card!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, login it!"
+              }).then((result) => {
+                if (result.isConfirmed) {
+                 navigate('/login',{state:{from:location}})
+                }
+              });
+        }
     }
     const { name, image, price, recipe, _id } = item;
     return (

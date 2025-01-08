@@ -16,6 +16,8 @@ const AuthProvider = ({children}) => {
         setLoading(true)
         return signInWithEmailAndPassword(auth,email,password)
     }
+    // popup
+
     // update Profile that menas photo set
     const updateUserProfile = (name, photo) => {
         return updateProfile(auth.currentUser, {
