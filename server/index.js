@@ -53,18 +53,24 @@ async function run() {
     const reviewCollection = client.db("BistroDB").collection("reviews");
     const cartCollection = client.db("BistroDB").collection("carts");
 
-    // Token Genarate 
-    app.post('/jote',async(req,res)=>{
-      const user = req.body
-      const token = jwt.sign(user,process.env.JWT_SECRET,{expiresIn:'5s'})
-      res
-      .cookie('Token',token,{
-        httpOnly:true,
-        secure:false
-      } )
-      .send({sucess:true})
+    // // Token Genarate 
+    // app.post('/jote',async(req,res)=>{
+    //   const user = req.body
+    //   const token = jwt.sign(user,process.env.JWT_SECRET,{expiresIn:'5s'})
+    //   res
+    //   .cookie('Token',token,{
+    //     httpOnly:true,
+    //     secure:false
+    //   } )
+    //   .send({sucess:true})
+    // })
+    // --------============user releted==============----------
+    app.post('/user',async(req,res)=>{
+      const user =req.body 
+      const result = await userCollection.insertOne(user)
+      res.send(result)
     })
-
+// --------------------------------------user end
     app.get('/menu',async(req,res)=>{
       const user = req.body 
       const result = await menuCollection.find(user).toArray()

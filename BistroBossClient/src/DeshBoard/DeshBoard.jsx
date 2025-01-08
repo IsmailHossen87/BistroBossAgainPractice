@@ -34,7 +34,7 @@ const DeshBoard = () => {
         <div>
             <ul className="ml-4">
                 <li>
-                <NavLink to="/my-booking"className={({ isActive }) =>`flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700" }` }><FaHome /> <span>Home</span></NavLink>
+                <NavLink to="/"className={({ isActive }) =>`flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700" }` }><FaHome /> <span>Home</span></NavLink>
                 </li>
                 <li>
                 <NavLink to="/order/salad"className={({ isActive }) =>`flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700" }` }><FaHome /> <span>Order</span></NavLink>

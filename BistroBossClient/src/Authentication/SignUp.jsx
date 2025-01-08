@@ -4,10 +4,12 @@ import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { AuthContext } from "../Providers/Authprobider/AuthProvider";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const SignUp = () => {
   const { createUser, updateUserProfile } = useContext(AuthContext);
-  const navigate = useNavigate()
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -18,17 +20,21 @@ const SignUp = () => {
   const onSubmit = (data) => {
     createUser(data.email, data.password).then((res) => {
       console.log(res.user);
-      updateUserProfile(data.name, data.photoURL).
-      then(() => {
-        reset()
-        Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Your signUp has been saved",
-            showConfirmButton: false,
-            timer: 1500
-          });
-          navigate('/')
+      updateUserProfile(data.name, data.photoURL).then(() => {
+        const userInfo = { name: data.name, email: data.email };
+        axiosSecure.post("/user", userInfo).then((res) => {
+          if (res.data.insertedId) {
+            reset();
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Your signUp has been saved",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+        });
+        navigate("/");
       });
     });
     console.log(data);
@@ -42,7 +48,6 @@ const SignUp = () => {
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left">
             <h1 className="text-5xl font-bold">Sign up now!</h1>
-            
           </div>
           <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
