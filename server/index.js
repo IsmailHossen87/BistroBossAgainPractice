@@ -67,6 +67,11 @@ async function run() {
     // --------============user releted==============----------
     app.post('/user',async(req,res)=>{
       const user =req.body 
+      const filter = {email: user.email}
+      const existingEmail = await userCollection.findOne(filter)
+      if(existingEmail){
+        return res.send({message:'user.already existed'})
+      }
       const result = await userCollection.insertOne(user)
       res.send(result)
     })
