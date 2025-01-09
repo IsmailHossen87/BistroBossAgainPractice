@@ -1,5 +1,5 @@
 const express = require('express')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
@@ -9,26 +9,37 @@ const port = process.env.PORT || 5000
 
 
 app.use(cors({
-  origin:['http://localhost:5173'],
+  origin:['http://localhost:5173',
+    'http://localhost:5174'
+  ],
   credentials:true
   }
 ))
 app.use(cookieParser())
 app.use(express.json())
+
+// verify Token
 const verifyToken = (req,res,next)=>{
-  const token = req?.cookies?.Token
-  if(!token){
-    return res.status(401).send({message:'UnAuthorize'})
+  // jodi token na ase
+  if(!req.headers.authorization){
+    return res.status(401).send({message:'forbidden acess'})
   }
-  jwt.verify(token,process.env.JWT_SECRET,(err,decoded)=>{
+  // token er porer ongso pawar jonn
+  const token = req.headers.authorization.split(' ')[1]
+  // token na pele
+  if(!token){
+    return res.status(401).send({message:'forbidden acess'})
+  }
+  jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err,decoded)=>{
+    
     if(err){
-      return res.status(401).send({message:'UnAuthorize'})
+      return res.status(401).send({message:'forbidden acess'})
     }
-    console.log(decoded)
-    req.user= decoded
+    req.decoded = decoded ;
     next()
   })
 }
+
 
 const uri = `mongodb+srv://${process.env.DB_USERS}:${process.env.DB_PASS}@cluster0.hg2ad.mongodb.net/?retryWrites=true&w=majority`;
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -54,17 +65,27 @@ async function run() {
     const cartCollection = client.db("BistroDB").collection("carts");
 
     // // Token Genarate 
-    // app.post('/jote',async(req,res)=>{
-    //   const user = req.body
-    //   const token = jwt.sign(user,process.env.JWT_SECRET,{expiresIn:'5s'})
-    //   res
-    //   .cookie('Token',token,{
-    //     httpOnly:true,
-    //     secure:false
-    //   } )
-    //   .send({sucess:true})
-    // })
+    app.post('/jwt',async(req,res)=>{
+      const user = req.body 
+      const token=jwt.sign(user,process.env.ACCESS_TOKEN_SECRET,{expiresIn:'2hr'})
+      res.send({token})
+    })
     // --------============user releted==============----------
+    // ----------------check Admin---------sesh e korte hobe ,1st  e isAdmin true dor-----
+    app.get('/user/admin/:email', verifyToken,async(req,res)=>{
+      const email = req.params.email 
+      if(email !== req.decoded.email){
+        return res.status(403).send({message:'unauthorize access'})
+      }
+      const filter= {email: email}
+      const user = await userCollection.findOne(filter)
+      let admin= false 
+      if(user){
+        admin = user?.role === 'admin'
+      }
+      res.send({admin})
+    })
+    // ----------------end Admin-------------------------
     app.post('/user',async(req,res)=>{
       const user =req.body 
       const filter = {email: user.email}
@@ -73,6 +94,31 @@ async function run() {
         return res.send({message:'user.already existed'})
       }
       const result = await userCollection.insertOne(user)
+      res.send(result)
+    })
+    // sob gula user k dekhanor jonno
+    app.get('/users',verifyToken,async(req,res)=>{
+      const user =req.body
+      const result = await userCollection.find(user).toArray()
+      res.send(result)
+    })
+    // user delete
+    app.delete('/delete/:id',async(req,res)=>{
+      const id = req.params.id 
+      const filter ={_id: new ObjectId(id)}
+      const result = await userCollection.deleteOne(filter)
+      res.send(result)
+    })
+    // user k daabase role hisabe admin banano
+    app.patch('/user/admin/:id',async(req,res)=>{
+      const id= req.params.id 
+      const filter = {_id: new ObjectId(id)}
+      const update = {
+        $set:{
+          role:'admin'
+        }
+      }
+      const result = await userCollection.updateOne(filter,update)
       res.send(result)
     })
 // --------------------------------------user end

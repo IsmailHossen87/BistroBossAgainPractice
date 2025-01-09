@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
-import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import Swal from 'sweetalert2'
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { LoadCanvasTemplate, loadCaptchaEnginge, validateCaptcha } from 'react-simple-captcha';
+import Swal from 'sweetalert2';
 import { AuthContext } from '../Providers/Authprobider/AuthProvider';
 import SocialLogin from './SocialLogin';
 

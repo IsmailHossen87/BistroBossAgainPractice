@@ -7,6 +7,7 @@ import Login from "../Authentication/Login";
 import SignUp from "../Authentication/SignUp";
 import DeshBoard from "../DeshBoard/DeshBoard";
 import Cart from "../DeshBoard/Cart";
+import AllUser from "../DeshBoard/AllUser";
 
 const Router = createBrowserRouter([
     {
@@ -42,6 +43,11 @@ const Router = createBrowserRouter([
             {
                 path:'card',
                 element:<Cart></Cart>
+            },
+            // admin
+            {
+                path:'alluser',
+                element:<AllUser></AllUser>
             }
         ]
     }
