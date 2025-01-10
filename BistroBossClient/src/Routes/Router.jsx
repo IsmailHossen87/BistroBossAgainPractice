@@ -10,6 +10,7 @@ import Cart from "../DeshBoard/Cart";
 import AllUser from "../DeshBoard/AllUser";
 import AddItems from "../DeshBoard/AddItems";
 import AdminRoute from "./AdminRoute";
+import ManageItems from "../DeshBoard/ManageItems";
 
 const Router = createBrowserRouter([
     {
@@ -49,6 +50,10 @@ const Router = createBrowserRouter([
             {
                 path:'add-items',
                 element:<AdminRoute><AddItems></AddItems></AdminRoute>
+            },
+            {
+                path:'manage-items',
+                element:<AdminRoute><ManageItems></ManageItems></AdminRoute>
             },
             // admin
             {

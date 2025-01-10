@@ -4,11 +4,14 @@ import SectionTitle from "../Shared/SectionTitle";
 import { useForm } from "react-hook-form";
 import { FaUtensils } from "react-icons/fa";
 import UseAxiosPublic from "../Hooks/UseAxiosPublic";
+import useAxiosSecure, { axiosSecure } from "../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 
 const AddItems = () => {
     const axiosPublic = UseAxiosPublic()
-  const { register, handleSubmit } = useForm();
+    const axiosSecure = useAxiosSecure()
+  const { register, handleSubmit ,reset} = useForm();
 
 
   const onSubmit = async (data) => {
@@ -17,13 +20,34 @@ const AddItems = () => {
     const formData = new FormData();
     formData.append("image", imageFile);
 
-  
     const {data:res}=await  axiosPublic.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_HOSTING}`, formData,{
       headers:{
         'Content-Type': 'multipart/form-data',
       }
     })
-      return console.log(res)
+    // jodi res er modde sucess thake tahole
+    if(res.success){
+      const menuItem={
+        name : data.name ,
+        category:data.category,
+        price:parseInt(data.price),
+        recipe:data.recipe,
+        image:res.data.display_url
+      }
+      console.log(menuItem)
+     const menuData = await axiosSecure.post('/menu',menuItem)
+     console.log(menuData.data)
+     if(menuData.data.insertedId){
+      reset()
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Your work has been saved",
+        showConfirmButton: false,
+        timer: 1500
+      });
+     }
+    }
     };
 
   return (

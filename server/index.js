@@ -136,11 +136,22 @@ async function run() {
       res.send(result);
     });
     // --------------------------------------user end
+    app.post('/menu',verifyToken,verifyAdmin,async(req,res)=>{
+      const data = req.body 
+      const result = await menuCollection.insertOne(data)
+      res.send(result)
+    })
     app.get("/menu", async (req, res) => {
       const user = req.body;
       const result = await menuCollection.find(user).toArray();
       res.send(result);
     });
+    app.delete('/menu_delete/:id',async(req,res)=>{
+      const id = req.params.id 
+      const filter = {_id: new ObjectId(id)}
+      const result = await menuCollection.deleteOne(filter)
+      res.send(result)
+    })
     app.get("/review", async (req, res) => {
       const user = req.body;
       const result = await reviewCollection.find(user).toArray();

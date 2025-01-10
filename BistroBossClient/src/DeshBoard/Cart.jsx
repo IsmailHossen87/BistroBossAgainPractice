@@ -44,6 +44,7 @@ const axiosSecure = useAxiosSecure()
         <h2 className='text-3xl font-semibold'>Items: {cart.length}</h2>
         <h2 className='text-3xl font-semibold'>Total Price: ${totalPrice}</h2>
       </div>
+      {/* table */}
       <table className='min-w-full divide-y divide-gray-200'>
         <thead className='bg-gray-50'>
           <tr>
@@ -68,7 +69,7 @@ const axiosSecure = useAxiosSecure()
                   onClick={() => handleDelete(item._id)}
                   className='text-gray-500 hover:text-red-500 text-2xl focus:outline-none'
                 >
-                 <MdDelete c></MdDelete>
+                 <MdDelete></MdDelete>
                 </button>
               </td>
             </tr>

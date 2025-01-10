@@ -5,7 +5,7 @@ import useAdmin from "../Hooks/useAdmin";
 
 const DeshBoard = () => {
   const [data]=useAdmin()
-  
+
   console.log("admin",data)
   return (
     <div className="flex">
@@ -22,7 +22,7 @@ const DeshBoard = () => {
 
             <li><NavLink to="/dashboard/add-items" className={({ isActive }) => `flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700"}`}><FaPlusCircle /><span>Add Item</span></NavLink></li>
 
-            <li><NavLink to="/manage-items" className={({ isActive }) => `flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700"}`}><FaTasks /><span>Manage Items</span></NavLink></li>
+            <li><NavLink to="/dashboard/manage-items" className={({ isActive }) => `flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700"}`}><FaTasks /><span>Manage Items</span></NavLink></li>
 
             <li><NavLink to="/dashboard/alluser" className={({ isActive }) => `flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700"}`}><FaUsers /><span>All Users</span></NavLink></li>
 
