@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { FaShoppingCart } from "react-icons/fa";
 import useCart from "../Hooks/useCart";
-import useAuth from "../Hooks/useAuth";
+import { useContext } from "react";
+import { AuthContext } from "../Providers/Authprobider/AuthProvider";
 
 const Navbar = () => {
-  const { user, logOut } = useAuth();
+  const { user, logOut } = useContext(AuthContext)
   // transtact query use kore cart gulo dekhanor jonno
   const [cart]= useCart()
   console.log(cart)

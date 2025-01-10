@@ -8,6 +8,8 @@ import SignUp from "../Authentication/SignUp";
 import DeshBoard from "../DeshBoard/DeshBoard";
 import Cart from "../DeshBoard/Cart";
 import AllUser from "../DeshBoard/AllUser";
+import AddItems from "../DeshBoard/AddItems";
+import AdminRoute from "./AdminRoute";
 
 const Router = createBrowserRouter([
     {
@@ -44,11 +46,15 @@ const Router = createBrowserRouter([
                 path:'card',
                 element:<Cart></Cart>
             },
+            {
+                path:'add-items',
+                element:<AdminRoute><AddItems></AddItems></AdminRoute>
+            },
             // admin
             {
                 path:'alluser',
-                element:<AllUser></AllUser>
-            }
+                element:<AdminRoute><AllUser></AllUser></AdminRoute>
+            },
         ]
     }
 

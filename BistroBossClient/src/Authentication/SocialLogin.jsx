@@ -12,7 +12,7 @@ const SocialLogin = () => {
   const handlelogin = () => {
     googleLogin().
     then((res) => {
-     const userInfo={email:res?.user?.email,name:res?.user?.displayName}
+     const userInfo={email:res?.user?.email,name:res?.user?.displayName }
      axiosPublic.post('/user',userInfo)
      .then((res)=>{
       if(res.data.insertedId){

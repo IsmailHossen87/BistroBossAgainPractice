@@ -33,9 +33,9 @@ const SignUp = () => {
               showConfirmButton: false,
               timer: 1500,
             });
+            navigate("/");
           }
         });
-        navigate("/");
       });
     });
     console.log(data);

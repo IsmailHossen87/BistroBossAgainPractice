@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { LoadCanvasTemplate, loadCaptchaEnginge, validateCaptcha } from 'react-simple-captcha';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../Providers/Authprobider/AuthProvider';
 import SocialLogin from './SocialLogin';
+import useAuth from '../Hooks/useAuth';
 
 const Login = () => {
+    const {user}= useAuth()
     const [disabled, setDisabled] = useState(true);
     const { signIn } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -27,7 +29,6 @@ const Login = () => {
         signIn(email, password)
         .then(result => {
             const user = result.user;
-            console.log(user);
             Swal.fire({
                 title: 'User Login Successful.',
                 showClass: { popup: 'animate__animated animate__fadeInDown' },
@@ -55,7 +56,9 @@ const Login = () => {
             setDisabled(true)
         }
     }
-
+if(user){
+    return <Navigate to={from || '/'} replace ></Navigate>
+}
    
     return (
         <>

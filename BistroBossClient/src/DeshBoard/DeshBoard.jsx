@@ -1,22 +1,28 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { FaHome, FaCalendarAlt, FaHistory, FaShoppingCart, FaStar, FaBook, FaPhone, FaCalendarCheck, FaPlusCircle, FaTasks, FaUsers } from "react-icons/fa";
+import useAdmin from "../Hooks/useAdmin";
 
 const DeshBoard = () => {
-  const isAdmin=true;
+  const [data]=useAdmin()
+  console.log("admin",data)
   return (
     <div className="flex">
       {/* Left Navigation */}
       <div className="w-2/12 min-h-screen bg-orange-400">
         <ul className="space-y-4 ml-4 mt-6">
          {
-          isAdmin ?
+          data ?
           // adimin
            <>
             <li><NavLink to="/home" className={({ isActive }) => `flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700"}`}><FaHome /><span>Admin Home</span></NavLink></li>
+
             <li><NavLink to="/manage-booking" className={({ isActive }) => `flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700"}`}><FaCalendarCheck /><span>Manage Booking</span></NavLink></li>
-            <li><NavLink to="/add-item" className={({ isActive }) => `flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700"}`}><FaPlusCircle /><span>Add Item</span></NavLink></li>
+
+            <li><NavLink to="/dashboard/add-items" className={({ isActive }) => `flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700"}`}><FaPlusCircle /><span>Add Item</span></NavLink></li>
+
             <li><NavLink to="/manage-items" className={({ isActive }) => `flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700"}`}><FaTasks /><span>Manage Items</span></NavLink></li>
+
             <li><NavLink to="/dashboard/alluser" className={({ isActive }) => `flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700"}`}><FaUsers /><span>All Users</span></NavLink></li>
 
            </> : 

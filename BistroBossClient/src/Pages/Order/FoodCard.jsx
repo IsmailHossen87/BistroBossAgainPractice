@@ -6,13 +6,13 @@ import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import useCart from '../../Hooks/useCart';
 
 const FoodCard = ({item}) => {
+    const axiosSecure= useAxiosSecure()
     const {user}= useAuth()
     const navigate = useNavigate()
     const location = useLocation()
     const[,refetch]= useCart()
     
     const handleAddtoCard =(item)=>{ 
-        const axiosSecure= useAxiosSecure()
         if(user && user.email){
             const cartItem = {menuId:_id,email:user.email,name,image,price }
             // axiosSecure diye data backend e pathabo
@@ -31,7 +31,7 @@ const FoodCard = ({item}) => {
             })
 
         }else
-        // jodi user na thake tahole login korate bbolbe
+        // jodi user na thake tahole login korate hobe
         {
             Swal.fire({
                 title: "Are you sure?",
