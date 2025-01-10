@@ -152,6 +152,18 @@ async function run() {
       const result = await menuCollection.deleteOne(filter)
       res.send(result)
     })
+    // update korar jonno ekta ke search 
+    app.get('/menufind/:id',async(req,res)=>{
+      const id = req.params.id 
+      const query = {_id: id}
+      const result  = await menuCollection.findOne(query)
+      res.send(result)
+    })
+    // update menu
+    // app.update('/menuUpdate',async(req,res)=>{
+    //   const 
+    // })
+
     app.get("/review", async (req, res) => {
       const user = req.body;
       const result = await reviewCollection.find(user).toArray();

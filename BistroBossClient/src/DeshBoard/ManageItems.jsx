@@ -5,6 +5,7 @@ import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
+import { Link } from "react-router-dom";
 
 const ManageItems = () => {
   const [menu,,refetch] = useMenu();
@@ -34,8 +35,6 @@ const ManageItems = () => {
     });
   };
 
-  // edit
-  const handleEdit = (id) => {};
   return (
     <div>
       <div>
@@ -87,12 +86,12 @@ const ManageItems = () => {
                 </td>
                 {/* update */}
                 <td className="px-4 py-4 text-sm whitespace-nowrap">
+                  <Link to={`/dashboard/updateItem/${item._id}`}>
                   <button
-                    onClick={() => handleEdit(item._id)}
                     className=" bg-orange-500 rounded-lg p-4 hover:text-white text-2xl focus:outline-none"
                   >
                     <FaEdit />
-                  </button>
+                  </button></Link>
                 </td>
                 {/* delete */}
                 <td className="px-4 py-4 text-sm whitespace-nowrap">
