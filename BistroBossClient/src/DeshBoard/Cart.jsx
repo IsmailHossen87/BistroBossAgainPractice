@@ -3,6 +3,7 @@ import useCart from '../Hooks/useCart';
 import { MdDelete } from "react-icons/md";
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../Hooks/useAxiosSecure';
+import { Link } from 'react-router-dom';
 
 const Cart = () => {
   const [cart,refetch] = useCart();
@@ -43,6 +44,9 @@ const axiosSecure = useAxiosSecure()
       <div className='flex justify-between px-2 mb-4'>
         <h2 className='text-3xl font-semibold'>Items: {cart.length}</h2>
         <h2 className='text-3xl font-semibold'>Total Price: ${totalPrice}</h2>
+         {
+          cart.length ? <Link to={'/dashboard/payment'}>  <button className='btn btn-primary'>Pay</button></Link> :  <button disabled className='btn btn-primary'>Select Item</button>
+         }
       </div>
       {/* table */}
       <table className='min-w-full divide-y divide-gray-200'>

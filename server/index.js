@@ -160,9 +160,22 @@ async function run() {
       res.send(result)
     })
     // update menu
-    // app.update('/menuUpdate',async(req,res)=>{
-    //   const 
-    // })
+    app.patch('/menuUpdate/:id',async(req,res)=>{
+      const item = req.body 
+      const id= req.params.id 
+      const filter ={_id: id}
+      const update ={
+        $set:{
+          name: item.name ,
+          category: item.category,
+          image:item.image ,
+          recipe:item.recipe,
+          price:item.price
+        }
+      }
+      const result = await menuCollection.updateOne(filter,update)
+      res.send(result)
+    })
 
     app.get("/review", async (req, res) => {
       const user = req.body;
