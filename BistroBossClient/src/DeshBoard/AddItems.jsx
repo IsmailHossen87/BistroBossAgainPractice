@@ -9,32 +9,22 @@ import UseAxiosPublic from "../Hooks/UseAxiosPublic";
 const AddItems = () => {
     const axiosPublic = UseAxiosPublic()
   const { register, handleSubmit } = useForm();
-//   const onSubmit = (data) => {
 
-//     const imageFile={image: data.image[0]}
-//     const imageName = imageFile.File
-//     const formData = new FormData()
-//     formData.append('image',imageName)
-//     const {res}= axiosPublic.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_HOSTING}`,formData)
-//     return console.log(res)
 
-//   };
-const onSubmit = async (data) => {
+  const onSubmit = async (data) => {
     const imageFile = data.image[0];
+
     const formData = new FormData();
-    formData.append('image', imageFile);
+    formData.append("image", imageFile);
+
   
-    try {
-      const {response} = await axiosPublic.post(
-        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_HOSTING}`,
-        formData
-      );
-      console.log(response); 
-    } catch (error) {
-      console.error("Image upload failed:", error);
-    }
-  };
-  
+    const {data:res}=await  axiosPublic.post(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMAGE_HOSTING}`, formData,{
+      headers:{
+        'Content-Type': 'multipart/form-data',
+      }
+    })
+      return console.log(res)
+    };
 
   return (
     <div>

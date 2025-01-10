@@ -5,6 +5,7 @@ import useAdmin from "../Hooks/useAdmin";
 
 const DeshBoard = () => {
   const [data]=useAdmin()
+  
   console.log("admin",data)
   return (
     <div className="flex">

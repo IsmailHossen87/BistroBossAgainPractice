@@ -15,9 +15,9 @@ const AdminRoute = ({children}) => {
         );
       }
       if (user && isAdmin) {
-        return <Navigate state={{from:location}} replace to="/login"/>
+        return children;
       }
-      return children;
+      return <Navigate state={{from:location}} replace to="/login"/>
 };
 
 export default AdminRoute;
