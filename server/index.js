@@ -148,7 +148,7 @@ async function run() {
     });
     app.delete('/menu_delete/:id',async(req,res)=>{
       const id = req.params.id 
-      const filter = {_id: new ObjectId(id)}
+      const filter = {_id: id}
       const result = await menuCollection.deleteOne(filter)
       res.send(result)
     })
