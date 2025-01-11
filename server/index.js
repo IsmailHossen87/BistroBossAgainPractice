@@ -1,11 +1,11 @@
+require("dotenv").config();
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
-// PAYMETN
-const stripe = require('stripe')(process.env.STRIPE_SECRET)
+// // PAYMETN
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const cors = require("cors");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
-require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -17,6 +17,7 @@ app.use(
 );
 app.use(cookieParser());
 app.use(express.json());
+
 
 const uri = `mongodb+srv://${process.env.DB_USERS}:${process.env.DB_PASS}@cluster0.hg2ad.mongodb.net/?retryWrites=true&w=majority`;
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -101,7 +102,6 @@ async function run() {
       if (user) {
         admin = user?.role === "admin";
       }
-      console.log(admin)
       res.send({ admin });
     });
     // ----------------end Admin-------------------------
@@ -205,19 +205,18 @@ async function run() {
       const result = await cartCollection.deleteOne(query);
       res.send(result);
     });
-    
 
 
     // payment releted
-    app.post('/payment_intent',async(req,res)=>{
+    app.post('/create-payment-intent',async(req,res)=>{
       const {price}= req.body 
       const amount = parseInt(price * 100)
-      const paymentIntent = await stripe.paymentIntents.create({
+      const paymentIntent = await stripe?.paymentIntents.create({
         amount:amount ,
         currency:'usd',
-        payment_method_types:['cards']
+        payment_method_types:['card']
       })
-      res.send({clientSecret:paymentIntent.client_secret})
+      res.send({clientSecret:paymentIntent?.client_secret})
     })
   } finally {
     // Ensures that the client will close when you finish/error
