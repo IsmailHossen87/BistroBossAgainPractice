@@ -1,6 +1,8 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+// PAYMETN
+const stripe = require('stripe')(process.env.STRIPE_SECRET)
 const cors = require("cors");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require("dotenv").config();
@@ -203,6 +205,20 @@ async function run() {
       const result = await cartCollection.deleteOne(query);
       res.send(result);
     });
+    
+
+
+    // payment releted
+    app.post('/payment_intent',async(req,res)=>{
+      const {price}= req.body 
+      const amount = parseInt(price * 100)
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount:amount ,
+        currency:'usd',
+        payment_method_types:['cards']
+      })
+      res.send({clientSecret:paymentIntent.client_secret})
+    })
   } finally {
     // Ensures that the client will close when you finish/error
   }
