@@ -14,6 +14,8 @@ import Order from "../Pages/Order/Order";
 import AdminRoute from "./AdminRoute";
 import Payment from "../DeshBoard/Payment/Payment";
 import PaymentHistory from "../DeshBoard/PaymentHistory";
+import AdminHome from "../DeshBoard/AdminHome";
+import UserHome from "../DeshBoard/UserHome";
 
 const Router = createBrowserRouter([
     {
@@ -47,6 +49,11 @@ const Router = createBrowserRouter([
         element:<DeshBoard></DeshBoard>,
         children:[
             {
+                path:'UserHome',
+                element:<UserHome></UserHome>
+            },
+        
+            {
                 path:'card',
                 element:<Cart></Cart>
             },
@@ -67,6 +74,10 @@ const Router = createBrowserRouter([
                 element:<PaymentHistory></PaymentHistory>
             },
             // admin
+            {
+                path:'adminHome',
+                element:<AdminRoute><AdminHome></AdminHome></AdminRoute>
+            },
             {
                 path:'alluser',
                 element:<AdminRoute><AllUser></AllUser></AdminRoute>

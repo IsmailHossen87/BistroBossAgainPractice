@@ -240,6 +240,18 @@ async function run() {
       const result = await paymentCollection.find(query).toArray()
       res.send(result)
     })
+    app.get('/adminStats',async(req,res)=>{
+      const user = await userCollection.estimatedDocumentCount()
+      const menuItem = await menuCollection.estimatedDocumentCount()
+      const cartItem = await cartCollection.estimatedDocumentCount()
+      res.send({
+        user,
+        menuItem,
+        cartItem,
+        
+
+      })
+    })
   } finally {
     // Ensures that the client will close when you finish/error
   }

@@ -5,11 +5,13 @@ import { FaShoppingCart } from "react-icons/fa";
 import useCart from "../Hooks/useCart";
 import { useContext } from "react";
 import { AuthContext } from "../Providers/Authprobider/AuthProvider";
+import useAdmin from "../Hooks/useAdmin";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext)
   // transtact query use kore cart gulo dekhanor jonno
   const [cart]= useCart()
+  const [data]=useAdmin()
   const handleLogOut = () => {
     logOut().then(() => {
       Swal.fire({
@@ -32,6 +34,12 @@ const Navbar = () => {
       <li>
         <Link to="/order/soup">Order</Link>
       </li>
+      {
+        user && data && <li> <Link to="/dashboard/adminHome">Admin Secret</Link> </li> 
+      }
+      {
+        user && !data && <li> <Link to="/dashboard/UserHome">User Secret</Link> </li> 
+      }
       <li>
         <Link to="/dashboard/card">
           <button className="btn">

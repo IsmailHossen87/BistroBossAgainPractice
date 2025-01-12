@@ -16,7 +16,7 @@ const DeshBoard = () => {
           data ?
           // adimin
            <>
-            <li><NavLink to="/home" className={({ isActive }) => `flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700"}`}><FaHome /><span>Admin Home</span></NavLink></li>
+            <li><NavLink to="/dashboard/adminHome" className={({ isActive }) => `flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700"}`}><FaHome /><span>Admin Home</span></NavLink></li>
 
             <li><NavLink to="/manage-booking" className={({ isActive }) => `flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700"}`}><FaCalendarCheck /><span>Manage Booking</span></NavLink></li>
 
@@ -31,11 +31,9 @@ const DeshBoard = () => {
 
 
 
-
-
           //normal user
            <>
-            <li><NavLink to="/home" className={({ isActive }) => `flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700"}`}><FaHome /><span>User Home</span></NavLink></li>
+            <li><NavLink to="/dashboard/UserHome" className={({ isActive }) => `flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700"}`}><FaHome /><span>User Home</span></NavLink></li>
 
           <li><NavLink to="/reservation" className={({ isActive }) => `flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700"}`}><FaCalendarAlt /><span>Reservation</span></NavLink></li>
 
