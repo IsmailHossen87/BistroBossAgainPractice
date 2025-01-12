@@ -18,7 +18,6 @@ const CheckOutForm = () => {
   const totalPrice = cart.reduce((total, item) => total + parseInt(item.price), 0);
 
   useEffect(()=>{
-    console.log(totalPrice)
     axiosSecure.post('/create-payment-intent',{price:totalPrice})
    .then(res => {
     setClientSecret(res.data.clientSecret)
@@ -72,6 +71,22 @@ const CheckOutForm = () => {
       console.log("payment intent",paymentIntent)
       if(paymentIntent.status == "succeeded")
         setTransactionId(paymentIntent.id)
+      // NOW SAVE THE PAYMENT IN THE DATABASE
+  
+      const payment ={
+        
+        user: user.email ,
+        price : totalPrice,
+        transactionId:paymentIntent.id,
+        // utc date convert use monent js
+        data : new Date(),
+        // delete korar jonno id lagbe
+        cardId : cart?.map(item => item._id),
+        menuItemId: cart?.map(item => item.menuId),
+        status: "pending"      
+      }
+      const res = await axiosSecure.post('/payment',payment)
+      console.log("payment saved",res)
     }
   };
 

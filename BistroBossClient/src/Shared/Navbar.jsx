@@ -10,7 +10,6 @@ const Navbar = () => {
   const { user, logOut } = useContext(AuthContext)
   // transtact query use kore cart gulo dekhanor jonno
   const [cart]= useCart()
-  console.log(cart)
   const handleLogOut = () => {
     logOut().then(() => {
       Swal.fire({

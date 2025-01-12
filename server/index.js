@@ -41,6 +41,7 @@ async function run() {
     const menuCollection = client.db("BistroDB").collection("menu");
     const reviewCollection = client.db("BistroDB").collection("reviews");
     const cartCollection = client.db("BistroDB").collection("carts");
+    const paymentCollection = client.db("BistroDB").collection("payment");
 
     app.post("/jwt", async (req, res) => {
       const user = req.body;
@@ -217,6 +218,14 @@ async function run() {
         payment_method_types:['card']
       })
       res.send({clientSecret:paymentIntent?.client_secret})
+    })
+    // payment korle sob store kore rakhar jonno
+    app.post('/payment',async(req,res)=>{
+      const payment= req.body 
+      const paymentResult = await paymentCollection.insertOne(payment)
+      // carefully  delete item in the card
+      console.log("payment saved",payment)
+      res.send(paymentResult)
     })
   } finally {
     // Ensures that the client will close when you finish/error
