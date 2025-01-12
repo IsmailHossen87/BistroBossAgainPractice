@@ -240,18 +240,68 @@ async function run() {
       const result = await paymentCollection.find(query).toArray()
       res.send(result)
     })
-    app.get('/adminStats',async(req,res)=>{
+    app.get('/adminStats',verifyToken, verifyAdmin,async(req,res)=>{
+      // notun notun user der data collection
       const user = await userCollection.estimatedDocumentCount()
+      // add food korle menu barbe
       const menuItem = await menuCollection.estimatedDocumentCount()
-      const cartItem = await cartCollection.estimatedDocumentCount()
+      // payment korle cartItem barbe
+      const cartItem = await paymentCollection.estimatedDocumentCount()
+      const result = await paymentCollection.aggregate([
+        {
+          $group:{
+            // _id: null: এখানে _id ফিল্ডের মান null দেওয়া হয়েছে। এর মানে হলো, সমস্ত ডাটা একটি গ্রুপে একত্রিত করা হবে। যদি _id-এর জায়গায় কোনো ফিল্ড দেওয়া হতো (যেমন customerId), তাহলে সেই ফিল্ড অনুযায়ী গ্রুপিং করা হতো।
+            _id:null,
+            totalRevenue:{
+              // "$PRICE"   এটি price ফিল্ডের মানগুলো যোগ করে totalRevenue তৈরি করে
+              $sum:'$price'
+            }
+          }
+        }
+      ]).toArray()
+      // total taka eta
+      const revenue = result.length > 0 ? result[0].totalRevenue : 0 
       res.send({
         user,
         menuItem,
         cartItem,
-        
-
+        revenue
+ 
       })
     })
+    // পাই চারট দেখানোর জন্য
+    app.get('/order-status',async(req,res)=>{
+      const result = await paymentCollection.aggregate([
+        {
+          $unwind:'$menuItemId'
+        },
+        {
+          $addFields: {
+            menuItemId: { $convert: { input: '$menuItemId', to: 'objectId' } } 
+          }
+        },  
+        {
+          $lookup:{
+            from:'menu',
+            localField:'menuItemId',
+            foreignField:'_id',
+            as:'menuItems'
+          }
+        },
+        {
+          $unwind:'$menuItems'
+        },
+        {
+          $group:{
+            _id: '$menuItems.category',
+            quantity:{$sum: 1},
+            revenue :{$sum:'$menuItems.price'}
+          }
+        }
+      ]).toArray()
+      res.send(result)
+    })
+
   } finally {
     // Ensures that the client will close when you finish/error
   }
