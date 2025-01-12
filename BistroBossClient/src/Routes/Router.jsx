@@ -13,6 +13,7 @@ import Menu from "../Pages/Menu/Menu";
 import Order from "../Pages/Order/Order";
 import AdminRoute from "./AdminRoute";
 import Payment from "../DeshBoard/Payment/Payment";
+import PaymentHistory from "../DeshBoard/PaymentHistory";
 
 const Router = createBrowserRouter([
     {
@@ -50,16 +51,20 @@ const Router = createBrowserRouter([
                 element:<Cart></Cart>
             },
             {
-                path:'payment',
-                element:<Payment></Payment>
-            },
-            {
                 path:'add-items',
                 element:<AdminRoute><AddItems></AddItems></AdminRoute>
             },
             {
                 path:'manage-items',
                 element:<AdminRoute><ManageItems></ManageItems></AdminRoute>
+            },
+            {
+                path:'payment',
+                element:<Payment></Payment>
+            },
+            {
+                path:'paymentHistory',
+                element:<PaymentHistory></PaymentHistory>
             },
             // admin
             {

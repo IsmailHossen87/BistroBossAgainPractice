@@ -36,10 +36,15 @@ const DeshBoard = () => {
           //normal user
            <>
             <li><NavLink to="/home" className={({ isActive }) => `flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700"}`}><FaHome /><span>User Home</span></NavLink></li>
+
           <li><NavLink to="/reservation" className={({ isActive }) => `flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700"}`}><FaCalendarAlt /><span>Reservation</span></NavLink></li>
-          <li><NavLink to="/payment-history" className={({ isActive }) => `flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700"}`}><FaHistory /><span>Payment History</span></NavLink></li>
+
+          <li><NavLink to="/dashboard/paymentHistory" className={({ isActive }) => `flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700"}`}><FaHistory /><span>Payment History</span></NavLink></li>
+
           <li><NavLink to="/dashboard/card" className={({ isActive }) => `flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700"}`}><FaShoppingCart /><span>My Cart</span></NavLink></li>
+
           <li><NavLink to="/add-review" className={({ isActive }) => `flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700"}`}><FaStar /><span>Add Review</span></NavLink></li>
+
           <li><NavLink to="/my-booking" className={({ isActive }) => `flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700"}`}><FaBook /><span>My Booking</span></NavLink></li>
            </>
          }

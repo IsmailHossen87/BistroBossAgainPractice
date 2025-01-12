@@ -151,14 +151,14 @@ async function run() {
     });
     app.delete('/menu_delete/:id',async(req,res)=>{
       const id = req.params.id 
-      const filter = {_id: id}
+      const filter = {_id: new ObjectId(id)}
       const result = await menuCollection.deleteOne(filter)
       res.send(result)
     })
     // update korar jonno ekta ke search 
     app.get('/menufind/:id',async(req,res)=>{
       const id = req.params.id 
-      const query = {_id: id}
+      const query = {_id: new ObjectId(id)}
       const result  = await menuCollection.findOne(query)
       res.send(result)
     })
@@ -166,7 +166,7 @@ async function run() {
     app.patch('/menuUpdate/:id',async(req,res)=>{
       const item = req.body 
       const id= req.params.id 
-      const filter ={_id: id}
+      const filter ={_id: new ObjectId(id)}
       const update ={
         $set:{
           name: item.name ,
@@ -224,8 +224,21 @@ async function run() {
       const payment= req.body 
       const paymentResult = await paymentCollection.insertOne(payment)
       // carefully  delete item in the card
-      console.log("payment saved",payment)
-      res.send(paymentResult)
+      const query ={_id:{
+        $in:payment.cardId?.map(id => new ObjectId(id))
+      }}
+      const deleteResult = await cartCollection.deleteMany(query)
+      res.send({paymentResult,deleteResult})
+    })
+    // paymet history show
+    app.get('/paymentHistory/:email',verifyToken,async(req,res)=>{ 
+      const email = req.params.email 
+      const query = {user: email}
+      if(email !== req.decoded.email){
+        return res.status(403).send({message:'forbidden access'})
+      }
+      const result = await paymentCollection.find(query).toArray()
+      res.send(result)
     })
   } finally {
     // Ensures that the client will close when you finish/error
