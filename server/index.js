@@ -32,10 +32,10 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!"
-    );
+    // await client.db("admin").command({ ping: 1 });
+    // console.log(
+    //   "Pinged your deployment. You successfully connected to MongoDB!"
+    // );
 
     const userCollection = client.db("BistroDB").collection("users");
     const menuCollection = client.db("BistroDB").collection("menu");
@@ -52,7 +52,7 @@ async function run() {
     });
     // verify Token
     const verifyToken = (req, res, next) => {
-      // jodi token na ase
+      // jodi token na ase      {authorizaton astese local ER AxiosSecure theke}
       if (!req.headers.authorization) {
         return res.status(401).send({ message: "forbidden acess" });
       }
