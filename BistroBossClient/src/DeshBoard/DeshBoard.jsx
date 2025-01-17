@@ -6,7 +6,7 @@ import useAdmin from "../Hooks/useAdmin";
 const DeshBoard = () => {
   const [data]=useAdmin()
 
-  console.log("admin",data)
+  // console.log("admin",data)
   return (
     <div className="flex">
       {/* Left Navigation */}
@@ -55,7 +55,7 @@ const DeshBoard = () => {
       <li><NavLink to="/order/salad" className={({ isActive }) => `flex items-center space-x-2 ${isActive ? "text-blue-600 font-bold" : "text-gray-700"}`}><FaPhone /><span>Contract</span></NavLink></li>
     </ul>
   </div>
-</div>
+      </div>
 
 
       {/* Right Content */}

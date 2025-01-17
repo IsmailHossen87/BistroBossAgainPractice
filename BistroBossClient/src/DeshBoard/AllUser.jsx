@@ -93,20 +93,14 @@ const AllUser = () => {
                           <td className='px-4 py-4 text-sm text-gray-500 whitespace-nowrap'>{item.name}</td>
                           <td className='px-4 py-4 text-sm text-gray-500 whitespace-nowrap'>{item.email}</td>
                           {/* role */}
-                          <td className='px-4 py-4 text-sm whitespace-nowrap'>
-                           {
-                            item.role === 'admin' ? 'Admin':
+                          <td className='px-4 py-4 text-sm whitespace-nowrap'>  { item.role === 'admin' ? 'Admin':
                             <>
-                             <button
-                                onClick={()=>handleAdmin(item)}
-                               className=' bg-yellow-500 text-white p-3 rounded-[7px] hover:text-black text-xl focus:outline-none'
-                            >
-                             <FaUsers></FaUsers>
+                             <button onClick={()=>handleAdmin(item)} className=' bg-yellow-500 text-white p-3 rounded-[7px] hover:text-black text-xl focus:outline-none' ><FaUsers></FaUsers>
                             </button>
                             </>
-                            
                            }
                           </td>
+                          
                           {/* acton */}
                           <td className='px-4 py-4 text-sm whitespace-nowrap'>
                             <button

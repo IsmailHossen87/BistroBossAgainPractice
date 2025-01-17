@@ -2,7 +2,7 @@ import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStat
 import { createContext, useEffect, useState } from "react";
 import { app } from "../../Firebase/firebase";
 import UseAxiosPublic from "../../Hooks/UseAxiosPublic";
-export const AuthContext = createContext(null)
+export const AuthContext = createContext({})
 const auth = getAuth(app)
 const AuthProvider = ({children}) => {
     const [user,setUser]= useState(null)
